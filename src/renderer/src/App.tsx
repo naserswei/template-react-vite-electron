@@ -8,7 +8,7 @@ function App(): React.JSX.Element {
     <>
       <Button>Click me</Button>
       <h1 className="text-3xl font-bold underline">Hello World</h1>
-      <p>App version: 1.0.1</p>
+      <p>App version: 1.0.2</p>
       <UsersDemo />
       <Versions />
     </>
