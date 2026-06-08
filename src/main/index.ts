@@ -6,8 +6,9 @@ import icon from '../../resources/icon.png?asset'
 import { initializeDatabase } from './db/db'
 import { resolveDatabaseUrl } from './db/database-url'
 import { registerIpcHandlers } from './ipc/register-ipc'
+import { setupAutoUpdater } from './updater'
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -37,6 +38,8 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  return mainWindow
 }
 
 // This method will be called when Electron has finished
@@ -57,7 +60,8 @@ app.whenReady().then(() => {
   initializeDatabase(resolveDatabaseUrl())
   registerIpcHandlers()
 
-  createWindow()
+  const mainWindow = createWindow()
+  setupAutoUpdater(mainWindow)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
