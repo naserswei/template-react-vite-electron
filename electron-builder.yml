@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: '-'
+appId: com.naserswei.templateReactViteElectron
+productName: Template React Vite Electron
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: '-'
+  executableName: template-react-vite-electron
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
