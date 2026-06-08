@@ -1,4 +1,5 @@
 import { drizzle } from 'drizzle-orm/libsql'
+import { migrate } from 'drizzle-orm/libsql/migrator'
 import * as schema from './models/schema'
 
 type AppDatabase = ReturnType<typeof drizzle<typeof schema>>
@@ -31,4 +32,8 @@ export function getDb(): AppDatabase {
     )
   }
   return instance
+}
+
+export async function migrateDatabase(migrationsFolder: string): Promise<void> {
+  await migrate(getDb(), { migrationsFolder })
 }

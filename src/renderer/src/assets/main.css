@@ -121,7 +121,19 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply bg-background;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply m-0 bg-background text-foreground antialiased;
+  }
+  #root {
+    min-height: 100vh;
+  }
+  .versions {
+    @apply grid list-none gap-3 p-0 sm:grid-cols-3;
+  }
+  .versions li {
+    @apply rounded-lg border bg-background p-3 text-sm font-medium text-foreground;
   }
 }

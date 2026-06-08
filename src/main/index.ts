@@ -3,7 +3,7 @@ import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { initializeDatabase } from './db/db'
+import { initializeDatabase, migrateDatabase } from './db/db'
 import { resolveDatabaseUrl } from './db/database-url'
 import { registerIpcHandlers } from './ipc/register-ipc'
 import { setupAutoUpdater } from './updater'
@@ -45,7 +45,7 @@ function createWindow(): BrowserWindow {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
@@ -58,6 +58,7 @@ app.whenReady().then(() => {
 
   // Local DB (Drizzle + libSQL). Uses DB_FILE_NAME from .env when set.
   initializeDatabase(resolveDatabaseUrl())
+  await migrateDatabase(join(app.getAppPath(), 'drizzle'))
   registerIpcHandlers()
 
   const mainWindow = createWindow()
