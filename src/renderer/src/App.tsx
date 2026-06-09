@@ -53,7 +53,7 @@ function App(): React.JSX.Element {
               </a>
             </Button>
             <div className="rounded-lg border bg-card px-3 py-1.5 text-sm font-medium text-card-foreground">
-              Version 1.0.10
+              Version 1.0.11
             </div>
           </div>
         </header>
