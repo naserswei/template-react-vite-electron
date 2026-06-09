@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { IPC_CHANNELS } from '../shared/ipc/channels'
+import type { UpdaterStatus, UpdaterStatusListener } from '../shared/types/updater'
 import type { UserDto } from '../shared/types/user'
 
 /**
@@ -12,6 +13,17 @@ const api = {
      * Fetches all users from the main process (Drizzle query over IPC).
      */
     list: (): Promise<UserDto[]> => ipcRenderer.invoke(IPC_CHANNELS.USERS_LIST)
+  },
+  updater: {
+    onStatus: (listener: UpdaterStatusListener): (() => void) => {
+      const handler = (_event: Electron.IpcRendererEvent, status: UpdaterStatus): void => {
+        listener(status)
+      }
+
+      ipcRenderer.on(IPC_CHANNELS.UPDATER_STATUS, handler)
+      return () => ipcRenderer.removeListener(IPC_CHANNELS.UPDATER_STATUS, handler)
+    },
+    installNow: (): Promise<void> => ipcRenderer.invoke(IPC_CHANNELS.UPDATER_INSTALL_NOW)
   }
 }
 

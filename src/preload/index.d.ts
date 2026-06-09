@@ -1,4 +1,5 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
+import type { UpdaterStatusListener } from '../shared/types/updater'
 import type { UserDto } from '../shared/types/user'
 
 /**
@@ -7,6 +8,10 @@ import type { UserDto } from '../shared/types/user'
 export interface AppPreloadApi {
   users: {
     list: () => Promise<UserDto[]>
+  }
+  updater: {
+    onStatus: (listener: UpdaterStatusListener) => () => void
+    installNow: () => Promise<void>
   }
 }
 
