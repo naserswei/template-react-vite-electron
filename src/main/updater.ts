@@ -15,6 +15,7 @@ export function setupAutoUpdater(mainWindow: BrowserWindow): void {
   }
 
   autoUpdater.autoDownload = true
+  autoUpdater.autoInstallOnAppQuit = false
 
   autoUpdater.on('checking-for-update', () => {
     sendUpdaterStatus(mainWindow, { type: 'checking' })
